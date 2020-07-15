@@ -9,7 +9,8 @@ WINNING_POSITION=100
 dieResult=0
 checkOptions=0
 STARTINGPOSITION=0
-numberOfTimesDiceroll=0
+numberOfTimesPlayer1Diceroll=0
+numberOfTimesPlayer2Diceroll=0
 playerOne=0
 playerTwo=0
 declare -a playerOne
@@ -58,20 +59,34 @@ function diceRoll(){
 function switchToPlayer(){
    while [ $positionOfPlayer -le $WINNING_POSITION ]
    do
-      ((numberOfTimesDiceroll++))
-       if [ $chance -eq 1 ]
-       then
-         diceRoll $playerOne
-         playerOne=$?
-         playerOne[$numberOfTimesDiceRoll]=$playerOne
-         echo "Player1 position :" $playerOne
+      if [ $chance -eq 1 ]
+      then
+         ((numberOfTimesPlayer1Diceroll++))     
+      diceRoll $playerOne
+      playerOne=$?
+      playerOne[$numberOfTimesDiceRoll]=$playerOne
+      echo "Player1 position :" $playerOne
          if [ $playerOne -eq $WINNING_POSITION ]
          then
-            echo "player1 win"
+         echo "player1 win"
          break
-         fi
-      fi
-  done
+      else
+         ((numberOfTimesPlayer2Diceroll++))
+         diceRoll $playerTwo
+         playerTwo=$?
+         playerTwo[$numberOfTimesDiceRoll]=$playerTwo
+         echo "Player2 position :" $playerTwo
+            if [ $playerTwo -eq $WINNING_POSITION ]
+            then
+               echo "player2 win"
+            break
+            fi
+              chance=1
+          fi
+        fi
+     done
 }
 switchToPlayer
-echo "Numberoftimesdiesrolled=" $numberOfTimesDiceroll
+echo "Numberoftimesplayer1diesrolled= $numberOfTimesPlayer1Diceroll Numberoftimesplayer2diesrolled= $numberOfTimesPlayer1Diceroll"
+
+
