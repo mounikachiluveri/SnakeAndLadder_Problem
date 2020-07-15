@@ -74,3 +74,4 @@ function switchToPlayer(){
   done
 }
 switchToPlayer
+echo "Numberoftimesdiesrolled=" $numberOfTimesDiceroll
